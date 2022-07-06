@@ -36,7 +36,7 @@ logger.addHandler(handler)
 
 
 def send_message(bot, message):
-    '''Отправляет сообщение в телеграм-чат'''
+    """Отправляет сообщение в телеграм-чат."""
     return bot.send_message(TELEGRAM_CHAT_ID, message)
 
 
@@ -67,7 +67,7 @@ def get_api_answer(current_timestamp):
 def check_response(response):
     """Проверяет ответ API на корректность.
     Если ответ API соответствует ожиданиям,
-    то функция должна вернуть список домашних работ
+    то функция должна вернуть список домашних работ.
     """
     if type(response) is not dict:
         logger.error('Ответ API не является словарем.')
@@ -86,9 +86,8 @@ def check_response(response):
 def parse_status(homework):
     """Извлекает из информации о конкретной домашней работе статус этой работы.
     В случае успеха, функция возвращает подготовленную для отправки в Telegram
-    строку, содержащую один из вердиктов словаря HOMEWORK_STATUSES
+    строку, содержащую один из вердиктов словаря HOMEWORK_STATUSES.
     """
-
     homework_name = homework.get('homework_name')
     homework_status = homework.get('status')
     if not homework_name:
@@ -106,7 +105,6 @@ def check_tokens():
     Если отсутствует хотя бы одна переменная окружения —
     функция должна вернуть False, иначе — True.
     """
-
     return all((PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID))
 
 
