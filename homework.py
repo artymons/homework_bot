@@ -17,7 +17,7 @@ PRACTICUM_TOKEN = os.getenv('PRACTICUM_TOKEN')
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
-RETRY_TIME = 600
+RETRY_TIME = 2
 ENDPOINT = 'https://practicum.yandex.ru/api/user_api/homework_statuses/'
 HEADERS = {'Authorization': f'OAuth {PRACTICUM_TOKEN}'}
 
@@ -117,12 +117,14 @@ def main():
         sys.exit()
 
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
-    current_timestamp = 1620741126
+    current_timestamp = int(time.time())
     prev_message = ""
     while True:
         try:
             response = get_api_answer(current_timestamp)
             homeworks = check_response(response)
+            if homeworks == []:
+                logger.debug("Список домашних работ пустой")
             message = parse_status(homeworks[0])
             if prev_message != message:
                 message = parse_status(homeworks[0])
@@ -131,8 +133,6 @@ def main():
                 logger.info(f'Отправлено сообщение: {message}')
             else:
                 logger.debug('новые статусы в ответе отсутствуют')
-            if homeworks == []:
-                logger.debug("Список домашних работ пустой")
             current_timestamp = response.get('current_date')
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
