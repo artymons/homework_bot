@@ -16,9 +16,7 @@ Telegram-бот обращается к API сервису Яндекс.Прак
 
 ### Запуск проекта на Linux
 Клонировать проект c GitHub
-```
-git clone git@github.com:boginskiy/yandex-telegrambot.git
-```
+
 Установить виртуальное окружение venv
 ```
 python3 -m venv venv
